@@ -1,4 +1,4 @@
-# M2S-AVSR: Robust Audio-Visual Speech Recognition via Multi-stage Sparse Modality Alignment
+# M2S-AVSR: Modality-aware Multi-view Self-supervised Representation for Robust Audio-Visual Speech Recognition
 
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://chatgpt.com/c/6a21250b-1650-83a4-bb00-7b355b7cbe5e)
@@ -107,7 +107,7 @@ If you find this work useful, please cite:
 
 ```bibtex
 @article{m2savsr2026,
-  title={M2S-AVSR: Robust Audio-Visual Speech Recognition via Multi-stage Sparse Modality Alignment},
+  title={M2S-AVSR: Modality-aware Multi-view Self-supervised Representation for Robust Audio-Visual Speech Recognition},
   author={Fei Su, Cancan Li, Ming Li, and Juan Liu},
   journal={arXiv preprint},
   year={2026}
