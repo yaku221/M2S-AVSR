@@ -301,12 +301,13 @@ python tools/compute-cer.py
 
 # Released Checkpoints
 
-The available checkpoints are listed below.
+Download the released checkpoints and place them under the `checkpoints/` directory.
+
 
 | Module | Download Link |
 |----------|----------|
-| Audio Model | https://pan.baidu.com/s/1SxhHrEe3kevYWNjbunq8Zg?pwd=d353 |
-| Video Model | https://pan.baidu.com/s/1HGeyAx3UJGKh_XMxrPRi7w?pwd=qhm6 |
+| Whisper Fine-tuned Model | https://pan.baidu.com/s/1SxhHrEe3kevYWNjbunq8Zg?pwd=d353 |
+| MVL Encoder | https://pan.baidu.com/s/1HGeyAx3UJGKh_XMxrPRi7w?pwd=qhm6 |
 | M2S-AVSR | https://pan.baidu.com/s/1woiJAyFzKEpPxQY-z0bayQ?pwd=jsdb |
 
 ---
