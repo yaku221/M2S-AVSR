@@ -1,0 +1,156 @@
+model: m2s_avsr  # whisper+avhubert
+model_conf:
+  ctc_weight: 0.0
+  length_normalized_loss: false
+  lsm_weight: 0.1
+input_dim: 80
+freeze_video_model: true
+freeze_video_batch_norm_stats: false
+fusion_method: gated_fusion
+
+
+
+init_models:
+  audio_model_ckpt: 'checkpoints/audio_model.pt'
+  video_model_ckpt: 'checkpoints/video_model.pt
+
+encoder: m2s_avsr_encoder
+encoder_conf:
+  activation_type: gelu
+  attention_dropout_rate: 0.0
+  attention_heads: 20
+  dropout_rate: 0.0
+  gradient_checkpointing: true
+  input_layer: conv1d2  # conv1d2, conv2d, conv2d8
+  key_bias: false
+  linear_units: 5120
+  normalize_before: true
+  num_blocks: 32
+  output_size: 1280
+  pos_enc_layer_type: abs_pos_whisper
+  positional_dropout_rate: 0.0
+  static_chunk_size: -1
+  use_dynamic_chunk: false
+  use_dynamic_left_chunk: false
+  prob_av: 0.5  
+  prob_a: 0.0
+  fusion_stage: early 
+  use_av_hubert_encoder: true
+  lip_reader_layers_num: 3
+
+
+decoder: m2s_avsr_decoder
+decoder_conf:
+  activation_type: gelu
+  attention_heads: 20
+  dropout_rate: 0.0
+  gradient_checkpointing: true
+  input_layer: embed_learnable_pe
+  key_bias: false  
+  src_key_bias: true
+  src_key_bias_v: true
+  linear_units: 5120
+  normalize_before: true
+  num_blocks: 32
+  positional_dropout_rate: 0.0
+  self_attention_dropout_rate: 0.0
+  src_attention: true
+  src_attention_dropout_rate: 0.0
+  tie_word_embedding: true
+  use_output_layer: true
+
+
+tokenizer: whisper
+tokenizer_conf:
+  bpe_path: null
+  is_multilingual: true
+  non_lang_syms_path: null
+  num_languages: 100  
+  special_tokens:
+    eot: 50257
+    no_speech: 50363
+    no_timestamps: 50364
+    sot: 50258
+    sot_prev: 50362
+    timestamp_begin: 50365
+    transcribe: 50360
+    translate: 50359
+  split_with_space: false
+  symbol_table_path: null
+
+ctc: ctc
+ctc_conf:
+  ctc_blank_id: 50256
+
+cmvn: null
+cmvn_conf:
+  cmvn_file: null
+  is_json_cmvn: null
+
+
+dataset: avsr
+dataset_conf:
+  batch_conf:
+    batch_size: 20
+    batch_type: dynamic
+    max_frames_in_batch: 6000  # 12000
+  feats_type: log_mel_spectrogram
+  filter_conf:
+    max_length: 3000
+    min_length: 0
+    token_max_length: 448
+    token_min_length: 1
+  log_mel_spectrogram_conf:
+    hop_length: 160
+    n_fft: 400
+    num_mel_bins: 80
+    padding: 0
+  resample_conf:
+    resample_rate: 16000
+  shuffle: true
+  shuffle_conf:
+    shuffle_size: 1500
+  sort: true
+  sort_conf:
+    sort_size: 300  # 500
+  spec_aug: true
+  spec_aug_conf:
+    max_f: 10
+    max_t: 50
+    num_f_mask: 2
+    num_t_mask: 2
+  spec_sub: true
+  spec_sub_conf:
+    max_t: 30
+    num_t_sub: 3
+  spec_trim: false
+  speed_perturb: true
+  video_res: 96  
+  video_aug: true  
+  dataset_name: lrs3  
+  
+
+grad_clip: 5
+accum_grad: 1
+max_epoch: 100
+log_interval: 100
+gate_log_layers: [0, 7, 15, 23, 31]
+save_interval: 1000  
+
+
+optim: adamw
+optim_conf:
+  betas: [0.9, 0.98]
+  eps: 1.0e-8
+  weight_decay: 0.01  
+  lr_groups:
+    - keywords: ["video_projection", "gated_x_attn", "attn_gate", "ff", "gated_x_attn_ln", "ff_ln"]
+      lr: 0.0001
+    - keywords: ["others"]   
+      lr: 0.0
+
+scheduler: warmuplineardecay
+scheduler_conf:
+  warmup_steps: 5000
+  max_steps: 200000   
+

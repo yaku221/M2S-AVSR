@@ -1,0 +1,125 @@
+accum_grad: 1
+cmvn: null
+cmvn_conf:
+  cmvn_file: null
+  is_json_cmvn: null
+ctc: ctc
+ctc_conf:
+  ctc_blank_id: 50256
+dataset: avsr
+dataset_conf:
+  batch_conf:
+    batch_size: 20
+    batch_type: dynamic
+    max_frames_in_batch: 10000
+  cycle: 100
+  dataset_name: general_data
+  feats_type: log_mel_spectrogram
+  filter_conf:
+    max_length: 3000
+    min_length: 0
+    token_max_length: 448
+    token_min_length: 1
+  log_mel_spectrogram_conf:
+    hop_length: 160
+    n_fft: 400
+    num_mel_bins: 80
+    padding: 0
+  resample_conf:
+    resample_rate: 16000
+  shuffle: true
+  shuffle_conf:
+    shuffle_size: 1500
+  sort: true
+  sort_conf:
+    sort_size: 300
+  spec_aug: true
+  spec_aug_conf:
+    max_f: 10
+    max_t: 50
+    num_f_mask: 2
+    num_t_mask: 2
+  spec_sub: true
+  spec_sub_conf:
+    max_t: 30
+    num_t_sub: 3
+  spec_trim: false
+  speed_perturb: true
+  train: true
+  video_aug: true
+  video_res: 96
+decoder: m2s_avsr_decoder
+decoder_conf:
+  activation_type: gelu
+  attention_heads: 20
+  dropout_rate: 0.0
+  gradient_checkpointing: true
+  input_layer: embed_learnable_pe
+  key_bias: false
+  linear_units: 5120
+  normalize_before: true
+  num_blocks: 32
+  positional_dropout_rate: 0.0
+  self_attention_dropout_rate: 0.0
+  src_attention: true
+  src_attention_dropout_rate: 0.0
+  src_key_bias: true
+  src_key_bias_v: true
+  tie_word_embedding: true
+  use_output_layer: true
+dtype: bf16
+encoder: m2s_avsr_encoder
+encoder_conf:
+  activation_type: gelu
+  attention_dropout_rate: 0.0
+  attention_heads: 20
+  dropout_rate: 0.0
+  fusion_stage: early
+  gradient_checkpointing: true
+  input_layer: conv1d2
+  key_bias: false
+  linear_units: 5120
+  lip_reader_layers_num: 3
+  normalize_before: true
+  num_blocks: 32
+  output_size: 1280
+  pos_enc_layer_type: abs_pos_whisper
+  positional_dropout_rate: 0.0
+  prob_a: 0.0
+  prob_av: 0.5
+  static_chunk_size: -1
+  use_av_hubert_encoder: true
+  use_dynamic_chunk: false
+  use_dynamic_left_chunk: false
+freeze_video_batch_norm_stats: false
+freeze_video_model: true
+fusion_method: gated_fusion
+init_models:
+  audio_model_ckpt: checkpoints/audio_model.pt
+  video_model_ckpt: checkpoints/video_model.pt
+input_dim: 80
+model: m2s_avsr
+model_conf:
+  ctc_weight: 0.0
+  length_normalized_loss: false
+  lsm_weight: 0.1
+output_dim: 51866
+tokenizer: whisper
+tokenizer_conf:
+  bpe_path: null
+  is_multilingual: true
+  non_lang_syms_path: null
+  num_languages: 100
+  special_tokens:
+    eot: 50257
+    no_speech: 50363
+    no_timestamps: 50364
+    sot: 50258
+    sot_prev: 50362
+    timestamp_begin: 50365
+    transcribe: 50360
+    translate: 50359
+  split_with_space: false
+  symbol_table_path: null
+use_amp: false
+vocab_size: 51866
